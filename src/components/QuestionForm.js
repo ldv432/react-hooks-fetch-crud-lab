@@ -11,6 +11,7 @@ function QuestionForm(props) {
   });
 
   function handleChange(event) {
+
     setFormData({
       ...formData,
       [event.target.name]: event.target.value,
@@ -19,6 +20,17 @@ function QuestionForm(props) {
 
   function handleSubmit(event) {
     event.preventDefault();
+    fetch("http://localhost:4000/questions", {
+      method: "POST",
+      body: JSON.stringify({
+        prompt: formData.prompt,
+        answers: [formData.answer1, formData.answer2, formData.answer3, formData.answer4],
+        correctIndex: formData.correctIndex
+      }),
+      headers:{
+        "Content-Type" : "application/json"
+      }
+    })
     console.log(formData);
   }
 
